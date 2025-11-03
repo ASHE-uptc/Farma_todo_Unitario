@@ -29,6 +29,7 @@ public class Druggist extends Person{
         super(name, doc_type, doc_num);
         if(name==null) throw new IllegalArgumentException("El nombre no puede ser vacio");
         if(druggist_password==null) throw new IllegalArgumentException("La contraseña no puede ser vacia");
+        if(druggist_user==null) throw new IllegalArgumentException("El use no puede ser nulo");
         this.druggist_user = druggist_user;
         this.druggist_password = druggist_password;
     }

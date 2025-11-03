@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class Client extends Person {
     /**Nombre de usuario de fa para el inicio de sesion */
     private int pro_amount;
-     /**
+    /**
      * Constructor para crear un nuevo objeto Cliente.
      * <p>
      * Inicializa un nuevo objeto Farmacéutico con los datos ingresados y los datos para el inicio de sesion.
