@@ -1,7 +1,7 @@
 import javax.swing.SwingUtilities;
 //AHOY
 //Este es el main del proyecto.
-
+// comentario Julian
 import org.junit.Test;
 
 import UI.FarmaTodoGUI;
@@ -21,8 +21,8 @@ public class Main {
         //Comentario por Axel
         String pathfiledruggist="druggistList.txt";
         List<Druggist> druggList=FilesLoader.LoadDruggists(pathfiledruggist);
-         SwingUtilities.invokeLater(()->{
-             LoginGUI.startLogin();
+        SwingUtilities.invokeLater(()->{
+        LoginGUI.startLogin();
              //COMENTARIO POR FELP
         });
 }}
