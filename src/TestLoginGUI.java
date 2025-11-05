@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -35,10 +36,11 @@ public class TestLoginGUI{
      * <p>Para este test se espera que hayan resultados positivos, ya que los datos están bien ingresados.
      * En otras palabras, si los datos están bien ingresados y no son nulos, este método mostrará resultado positivo.
      * Describe lo que este método en específico si debe leer o hacer.<p>
+    * @throws FileNotFoundException 
      * 
      * */ 
     @Test
-    public void TeststartLoginCorrecto(){
+    public void TeststartLoginCorrecto() throws FileNotFoundException{
        LoginGUI testLoginGUI=new LoginGUI();
        List<Druggist>druggList=new ArrayList<>();
        String log_user="";
@@ -60,27 +62,30 @@ public class TestLoginGUI{
      * En otras palabras, si los datos están mal ingresados o son nulos, este método mostrará resultados negativos, indicando los fallos.
      * que tenga el método.<p>
      * 
-     * <p>Describe lo que este método en específico no debe leer o hacer.<p>
+     * <p>Describe lo que este método en específico no debe leer o hacer, y si detecta la excepcion, comprueba que esta se lance
+     * correctamente.<p>
      * 
      * */ 
 
     @Test
     public void TeststartLoginIncorrecto(){
-       String pathfiledruggist="rutaincorrecta"; 
+      String pathfiledruggist="rutaincorrecta";
+      Exception excepcion=assertThrows(FileNotFoundException.class, ()->{
        LoginGUI testLoginGUI=new LoginGUI();
-       List<Druggist>druggList=new ArrayList<>();
+       
+       List<Druggist>druggList=FilesLoader.LoadDruggists(pathfiledruggist);
        testLoginGUI.startLogin();
-       pathfiledruggist=null;
-       String log_user=null;
-       String pass=null;
+       
+       try {
+         testLoginGUI.setPathfiledruggist("RUTAINCORRECTA");
+         testLoginGUI.comprobarPathFile();
+       } catch (FileNotFoundException e) {
+         throw new FileNotFoundException("Archivo no encontrado Exception");
+       };
     
        assertEquals("La ruta de la lista de Farmaceuticos es incorrecta. ","druggistList.txt", testLoginGUI.getPathfiledruggist());
        System.out.println(testLoginGUI.getPathfiledruggist());
        assertNotNull("La lista de Usuarios es Nula. ",druggList);
-       assertNotNull("La contraseña no puede ser nula.",pass);
-       assertNotNull("El Usuario no puede ser nulo.",log_user);
-       
-        
-       
+       });
     }
 }

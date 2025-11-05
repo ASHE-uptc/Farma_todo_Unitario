@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 import UI.LoginGUI;
 import javax.swing.JButton;
@@ -40,7 +41,12 @@ public class MainMenuGUI extends JFrame{
         logOutButton.addActionListener(e->{
             LoginGUI logout=new LoginGUI();
             this.dispose();
-            logout.startLogin();
+            try {
+                logout.startLogin();
+            } catch (FileNotFoundException e1) {
+                System.out.println("Archivo no encontrado Excepcion.");
+                e1.printStackTrace();
+            }
         });
 
         exitButton.addActionListener(e->{

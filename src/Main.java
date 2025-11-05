@@ -12,6 +12,7 @@ import model.FilesLoader;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
@@ -22,7 +23,13 @@ public class Main {
         String pathfiledruggist="druggistList.txt";
         List<Druggist> druggList=FilesLoader.LoadDruggists(pathfiledruggist);
         SwingUtilities.invokeLater(()->{
-        LoginGUI.startLogin();
+        LoginGUI loginGUI = new LoginGUI();
+        try {
+            loginGUI.startLogin();
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado Excepcion.");
+            e.printStackTrace();
+        }
              //COMENTARIO POR FELP
         });
 }}

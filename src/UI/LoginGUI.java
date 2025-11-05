@@ -1,6 +1,8 @@
 package UI;
 
 import javax.swing.*;
+
+import java.io.FileNotFoundException;
 import java.util.List;
 import model.Druggist;
 import model.FilesLoader;
@@ -36,6 +38,14 @@ public class LoginGUI {
      * El programa finalizará si el usuario cancela el ingreso de credenciales.
      */
     public String pathfiledruggist="druggistList.txt";
+
+    public void comprobarPathFile()throws FileNotFoundException{
+        if (getPathfiledruggist()!="druggistList.txt") {
+            throw new FileNotFoundException("El archivo "+pathfiledruggist+" no se encontró. ");
+        }
+    }
+
+    
     
     public List<Druggist> getDruggistList() {
         return druggistList;
@@ -55,7 +65,8 @@ public class LoginGUI {
 
 
     
-    public static void startLogin() {
+    public void startLogin() throws FileNotFoundException{
+        LoginGUI loginGUI=new LoginGUI();
         
         
         boolean logged = false;
@@ -65,6 +76,8 @@ public class LoginGUI {
             String pathfiledruggist="druggistList.txt";
             // Cargar lista de farmacéuticos desde archivo
             List<Druggist> druggList = FilesLoader.LoadDruggists(pathfiledruggist);
+            loginGUI.comprobarPathFile();
+            
 
             // Solicitar nombre de usuario
             String log_user = JOptionPane.showInputDialog(null, "Ingrese usuario:", "Login", JOptionPane.QUESTION_MESSAGE);
