@@ -81,7 +81,8 @@ public class Product {
      * 
      * @param pro_expirarion       La fecha por la cual se va a modificar
      */
-    public void setPro_expirarion(LocalDate pro_expirarion) {
+    public void setPro_expirarion(LocalDate pro_expirarion) throws IllegalArgumentException{
+        if(pro_expirarion.isBefore(LocalDate.now()))throw new IllegalArgumentException("La fecha de expiración no es valida");
         this.pro_expirarion = pro_expirarion;
     }
     /**Modifica el nombre de un producto
@@ -102,14 +103,16 @@ public class Product {
      * 
      * @param pro_price     El precio del producto por el que se cambiará el anterior
      */
-    public void setPro_price(double pro_price) {
+    public void setPro_price(double pro_price)throws IllegalArgumentException {
+        if(pro_price<=0)throw new IllegalArgumentException("El precio no puede ser menor o igual a 0");
         this.pro_price = pro_price;
     }
     /**Modifica la cantidad disponible de un producto
      * 
      * @param pro_stock        La nueva cantidad disponible de un producto
      */
-    public void setPro_stock(int pro_stock){
+    public void setPro_stock(int pro_stock)throws IllegalArgumentException{
+        if(pro_stock<=0)throw new IllegalArgumentException("Las existencias no pueden ser menor o igual a 0");
         this.pro_stock=pro_stock;
     }
 

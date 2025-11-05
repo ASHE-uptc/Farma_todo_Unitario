@@ -1,10 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import java.time.LocalDate;
-
 import org.junit.Test;
-
-import model.FilesLoader;
 import model.Product;
 
 public class ProductTest {
@@ -68,5 +65,27 @@ public class ProductTest {
         Product product=new Product(1987, "Producto prueba", 14000, 4,LocalDate.parse("2025-12-31"));
         product.removeUnids(1);
         assertEquals(3,product.getPro_stock());
+    }
+
+    @Test 
+    public void TestSetStockNegativo(){
+       Exception exception= assertThrows(IllegalArgumentException.class, ()->{
+           Product product=new Product(1987, "Producto prueba", 14000, 4,LocalDate.parse("2025-12-31"));
+           product.setPro_stock(-5);
+        }); 
+    }
+    @Test 
+    public void TestSetPrecioNegativo(){
+       Exception exception= assertThrows(IllegalArgumentException.class, ()->{
+           Product product=new Product(1987, "Producto prueba", 14000, 4,LocalDate.parse("2025-12-31"));
+           product.setPro_price(-4000);
+        }); 
+    }
+    @Test 
+    public void TestSetFechaExpiraciónInválida(){
+       Exception exception= assertThrows(IllegalArgumentException.class, ()->{
+           Product product=new Product(1987, "Producto prueba", 14000, 4,LocalDate.parse("2025-12-31"));
+           product.setPro_expirarion(LocalDate.parse("2025-01-31"));;
+        }); 
     }
 }
