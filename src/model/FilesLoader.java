@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public class FilesLoader{
-        public static List<Product> LoadProducts(String pathFile)throws IllegalArgumentException{
+        public static List<Product> LoadProducts(String pathFile)throws FileNotFoundException,IllegalArgumentException, IOException,NumberFormatException{
             List<Product> products=new ArrayList<>();
 
             try(BufferedReader buffer_reader=new BufferedReader(new FileReader(pathFile))){
@@ -24,20 +24,19 @@ public class FilesLoader{
 
                     products.add(new Product(id, name, price, stock, expirDate));
                 }
-
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null,"Error leyendo el archivo "+ e.getMessage());
+                throw e;
+            } catch (IOException i) {
+                throw i;
             }catch(NumberFormatException p){
-                JOptionPane.showMessageDialog(null, "Algun elemento de la lista es incorrecto"+p.getMessage());
+                throw p;
             }catch(IllegalArgumentException j){
                 throw j;
             }
             return products;
         }
 
-        public static List<Druggist> LoadDruggists(String pathFile){
+        public static List<Druggist> LoadDruggists(String pathFile)throws FileNotFoundException, IOException,IllegalArgumentException{
             List<Druggist> druggists=new ArrayList<>();
 
             try(BufferedReader buffer_reader=new BufferedReader(new FileReader(pathFile))){
@@ -56,11 +55,11 @@ public class FilesLoader{
                 }
 
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println("Probablemente "+ e.getMessage());
+                throw e;
+            } catch (IOException i) {
+                throw i;
             }catch (IllegalArgumentException j){
-                System.out.println("ERROR "+j);
+                throw j;
             }
             return druggists;
         }

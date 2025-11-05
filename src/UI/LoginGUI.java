@@ -3,6 +3,7 @@ package UI;
 import javax.swing.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import model.Druggist;
 import model.FilesLoader;
@@ -75,7 +76,16 @@ public class LoginGUI {
         while (!logged) {
             String pathfiledruggist="druggistList.txt";
             // Cargar lista de farmacéuticos desde archivo
-            List<Druggist> druggList = FilesLoader.LoadDruggists(pathfiledruggist);
+            
+            try {
+        druggistList = FilesLoader.LoadDruggists(pathfiledruggist);
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null,"No se encontró el archivo");
+            } catch (IOException i) {
+                JOptionPane.showMessageDialog(null,"Error leyendo el archivo");
+            }catch (IllegalArgumentException j){
+                JOptionPane.showMessageDialog(null,"Algun elemento del archivo no es correcto");
+            }
             loginGUI.comprobarPathFile();
             
 
@@ -97,7 +107,7 @@ public class LoginGUI {
             String pass = new String(pf.getPassword());
 
             // Validación de credenciales
-            for (Druggist d : druggList) {
+            for (Druggist d : druggistList) {
                 if (d.getDruggist_user().equals(log_user) && d.getDruggist_password().equals(pass)) {
                     JOptionPane.showMessageDialog(null, "Bienvenido " + d.getName(), "Acceso concedido", JOptionPane.INFORMATION_MESSAGE);
 
