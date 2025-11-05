@@ -45,7 +45,6 @@ public class TestLoginGUI{
        List<Druggist>druggList=new ArrayList<>();
        String log_user="";
        String pass="";
-       testLoginGUI.startLogin();
        
     
        assertEquals("La ruta de la lista de Farmaceuticos es incorrecta. ","druggistList.txt", testLoginGUI.getPathfiledruggist());
@@ -74,7 +73,6 @@ public class TestLoginGUI{
        LoginGUI testLoginGUI=new LoginGUI();
        
        List<Druggist>druggList=FilesLoader.LoadDruggists(pathfiledruggist);
-       testLoginGUI.startLogin();
        
        try {
          testLoginGUI.setPathfiledruggist("RUTAINCORRECTA");
