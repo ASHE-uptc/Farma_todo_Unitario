@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 
 import model.Person;
-
+//person test
 public class PersonTest {
     @Test
     public void TestConstructorPersonExitosos(){
