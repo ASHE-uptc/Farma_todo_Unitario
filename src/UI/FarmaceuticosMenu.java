@@ -1,6 +1,8 @@
 package UI;
 
 import java.awt.BorderLayout;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +58,15 @@ public class FarmaceuticosMenu extends JFrame {
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        
+        try {
         listDruggist = FilesLoader.LoadDruggists("druggistList.txt");
+        } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null,"No se encontró el archivo");
+            } catch (IOException i) {
+                JOptionPane.showMessageDialog(null,"Error leyendo el archivo");
+            }catch (IllegalArgumentException j){
+                JOptionPane.showMessageDialog(null,"Algun elemento del archivo no es correcto");
+            }
         modelListDruggist = new DefaultListModel<>();
         byte contador = 0;
         for (Druggist druggist : listDruggist) {
@@ -145,7 +154,14 @@ public class FarmaceuticosMenu extends JFrame {
                     + name + "    |    Doc:" + numDoc + "    |    username:" + druggiestUser + "    |    password:"
                     + druggiestPassword);
             listDruggist.add(new Druggist(name, docType, numDoc, druggiestUser, druggiestPassword));
+            try {
             WriteFiles.SaveFiles("druggistList.txt", listDruggist);
+            } catch (FileNotFoundException f) {
+            JOptionPane.showMessageDialog(null, "El archivo de guardado no fue encontrado");
+            }catch( IOException i){
+            JOptionPane.showMessageDialog(null, "Error leyendo el archivo");
+            }
+            
         });
     }
 }

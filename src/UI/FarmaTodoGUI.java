@@ -2,6 +2,9 @@ package UI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.*;
 import model.Order;
 import model.Product;
@@ -27,7 +30,17 @@ public class FarmaTodoGUI extends JFrame{
         setLocationRelativeTo(null);
 
         //Loading Products
+        try {
         catalog=FilesLoader.LoadProducts("catalog.txt");
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,"El archivo no fue encontrado "+ e.getMessage());
+        } catch (IOException i) {
+                JOptionPane.showMessageDialog(null,"Error leyendo el archivo "+ i.getMessage());
+        }catch(NumberFormatException p){
+                JOptionPane.showMessageDialog(null, "Algun elemento de la lista es incorrecto"+p.getMessage());
+        }catch(IllegalArgumentException j){
+                JOptionPane.showMessageDialog(null, "Algun elemento de la lista es incorrecto"+j.getMessage());
+        }
         order=new Order(101, LocalDate.now());
 
         //Catalog Panel
@@ -67,7 +80,8 @@ public class FarmaTodoGUI extends JFrame{
             if (option==JOptionPane.YES_OPTION) {
                 order.AddProduct(product);
                 cartArea.append(product.getPro_name()+ "- ($"+product.getPro_price()*stock+") \n");
-                Price+=product.getPro_price()*stock;
+                Price+=product.calculatrPrice(stock);
+                product.removeUnids(stock);
             }else if (option==JOptionPane.NO_OPTION) {
                 JOptionPane.showMessageDialog(null, "Compra cancelada exitosamente");
             }

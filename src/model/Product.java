@@ -31,8 +31,10 @@ public class Product {
      * @param pro_stock         Cantidad de unidades iniciales del producto
      * @param pro_expirarion    Fecha de expiración del producto
      */
-    public Product(int pro_id, String pro_name, double pro_price, int pro_stock, LocalDate pro_expirarion){
-        //No es necesario meter un try catch dado que el filesloader ya posee uno 
+    public Product(int pro_id, String pro_name, double pro_price, int pro_stock, LocalDate pro_expirarion)throws IllegalArgumentException{
+        if(pro_price<=0)throw new IllegalArgumentException("El precio no puede ser menor o igual a 0");
+        if(pro_stock<=0)throw new IllegalArgumentException("Las existencias no pueden ser menor o igual a 0");
+        if(pro_expirarion.isBefore(LocalDate.now()))throw new IllegalArgumentException("La fecha de expiración no es valida");
         this.pro_id=pro_id;
         this.pro_name=pro_name;
         this.pro_price=pro_price;
@@ -110,7 +112,20 @@ public class Product {
     public void setPro_stock(int pro_stock){
         this.pro_stock=pro_stock;
     }
-    
+
+    public void removeUnids(int removedUnids)throws IllegalArgumentException{
+        if(removedUnids<=0)throw new IllegalArgumentException("Las unidades restadas no pueden ser 0");
+        if(removedUnids>pro_stock)throw new IllegalArgumentException("Las unidades del producto son insuficiente");
+        pro_stock-=removedUnids;
+    }
+
+    public double calculatrPrice(int unids)throws IllegalArgumentException{
+        double price=0;
+        if(unids<=0)throw new IllegalArgumentException("Las unidades restadas no pueden ser 0");
+            price=pro_price*unids;
+        return price;
+    }
+
     @Override
     public String toString() {
         return "Product [pro_name=" + pro_name + ", pro_id=" + pro_id + ", pro_price=" + pro_price + "Stock= "+pro_stock+", pro_expirarion="+ pro_expirarion + "]";
